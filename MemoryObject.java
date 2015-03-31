@@ -1,5 +1,15 @@
 package memoryMgmtSystem;
 
+/*
+ * class MemoryObject
+ * The MemoryObject class stores information for a memory object.
+ * 
+ * Each memory object has 3 key components:
+ * name = Object's name used for identifying the object in memory
+ * function = the object's function in memory (add or remove)
+ * size = how much space the object is going to take up in memory
+ * 
+ */
 public class MemoryObject {
 
 	private String name;
