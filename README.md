@@ -1,1 +1,2 @@
 # Buddy-System-OS
+This JAVA code is used to simulate memory allocation using the buddy system. Blocks can have different sizes of allocation. Something is stored in a space that is closest to its power of 2. For example, if something of size 7 needs to be stored, it will be stored in a block of size 8, 2^3. The system checks to see if a block's "buddy", the spot below it, is available to be brought together to create a bigger block of space to potentially store something in, or split up into smaller spots if needed.
