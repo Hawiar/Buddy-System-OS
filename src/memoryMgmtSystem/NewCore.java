@@ -6,13 +6,15 @@ public class NewCore {
 	private static ArrayList<MemoryObject> memory;
 	private final static int size = 64;
 	
-	public NewCore (Object [] array) {
+	public NewCore (Object [] array) 
+	{
 		memory = new ArrayList<MemoryObject> (size / 2);
 		memory.add(new MemoryObject(0, 63));
 		startMemory(array);
 	}
 	
-	public static ArrayList<MemoryObject> startMemory (Object [] array) throws MemoryException {
+	public static ArrayList<MemoryObject> startMemory (Object [] array) throws MemoryException 
+	{
 		memory = new ArrayList<MemoryObject> (size / 2);
 		memory.add(new MemoryObject(0, 63));
 		for (int i = 0; i < array.length; i++) {
@@ -33,7 +35,8 @@ public class NewCore {
 		return memory;
 	}
 	
-	public static void add (MemoryObject item) {
+	public static void add (MemoryObject item) 
+	{
 		int memSize = findSubSize(item.getSize());
 		while (true) {
 			for (int i = 0; i < memory.size(); i++) {
@@ -57,7 +60,8 @@ public class NewCore {
 		}
 	}
 	
-	public static boolean breakDown (int thisSize) {
+	public static boolean breakDown (int thisSize)
+	{
 		int currSize = thisSize;
 		while (currSize <= size) {
 			for (int i = 0; i < memory.size(); i++) {
@@ -84,7 +88,8 @@ public class NewCore {
 		return false;
 	}
 	
-	public static int findSubSize (int value) {
+	public static int findSubSize (int value) 
+	{
 		int subSize = size;
 		while (subSize > 1) {
 			if (value < subSize && subSize / 2 > value) {
@@ -97,7 +102,8 @@ public class NewCore {
 		return 0;
 	}
 	
-	public static void remove (MemoryObject item) {
+	public static void remove (MemoryObject item) 
+	{
 		for (int i = 0; i < memory.size(); i++) {
 			MemoryObject current = memory.get(i);
 			if (current.getName() == item.getName()) {
@@ -110,7 +116,8 @@ public class NewCore {
 		}
 	}
 	
-	public static void buddyUp () {
+	public static void buddyUp () 
+	{
 		boolean finished = false;
 		while (!finished) {
 			finished = true;
