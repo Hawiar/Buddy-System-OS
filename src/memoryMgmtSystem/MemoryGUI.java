@@ -15,8 +15,14 @@ public class MemoryGUI {
 	JMenuBar menubar;
 	Container contentPane;
 	JPanel p1;
+	JPanel p2;
 	JTextArea ta;
 	private boolean startUsed = false; //Keep track of user's first time using start
+	
+	private int heightAdjustment = 28;
+	private final int MEM_BLOCK_SCALE = 10; 
+	private final int MEM_BLOCK_WIDTH = 192; 
+	private final int MEM_BLOCK_WIDTH_ADJUST = 16;
 	
 	//Below is the set of starting user instructions in HTML
 	private static final String instructions = "<html><center><font color='red'>Welcome to our Buddy System!</font><br><br>"
@@ -31,7 +37,9 @@ public class MemoryGUI {
 	private static JPanel startBar = new JPanel(); //Holds start button
 	private static JLabel instructionsLabel; //Used for instructional display
 	private JLabel freeSpace; //Possible counter for free space left in memory, to be displayed at top of button bar
-	
+	private static JTextField nameAdd = new JTextField();
+	private static JTextField sizeBox = new JTextField();
+	private static JTextField nameRemove = new JTextField();
 	
 	
 
@@ -47,13 +55,17 @@ public class MemoryGUI {
 	
 	public void makeFrame()
 	{
+		MemoryController controller = new MemoryController();
+		
 		frame = new JFrame("Memory Management System");
 		contentPane = frame.getContentPane();
 		
 		frame.setLayout(new BorderLayout());
 		p1 = new JPanel();
 		p1.setLayout(new FlowLayout());
-		//contentPane.add(p1, BorderLayout.CENTER);
+		p2 = new JPanel();
+		contentPane.add(p1, BorderLayout.WEST);
+		contentPane.add(p2, BorderLayout.EAST);
 		
 		ta = new JTextArea();
 		p1.add(ta);
@@ -61,11 +73,13 @@ public class MemoryGUI {
 		frame.pack();
 		frame.setSize(700, 700);
 		frame.setVisible(true);
-		buttonBar.setLayout(new GridLayout (5,1));
-		contentPane.add(buttonBar, BorderLayout.EAST);
+		buttonBar.setLayout(new GridLayout (5,2));
+		p2.add(buttonBar, BorderLayout.EAST);
 		
 		if (startUsed == false) //Checks if user has already read the instructions
 		{
+			p1.setVisible(false);
+			p2.setVisible(false);
 			startBar.setLayout(new GridLayout (6,4));
 			instructionsLabel = new JLabel(instructions);
 			contentPane.add(startBar, BorderLayout.CENTER);
@@ -91,7 +105,10 @@ public class MemoryGUI {
 				startBar.setVisible(false);
 				instructionsLabel.setVisible(false);
 				startUsed = true;
-				populate();}
+				p1.setVisible(true);
+				p2.setVisible(true);
+				populate();
+				makeGrid();}
         });
 		
 		startBar.add(start);
@@ -129,6 +146,20 @@ public class MemoryGUI {
 		buttonBar.add(remove);
 		buttonBar.add(reset);
 		buttonBar.add(quit);
+		buttonBar.add(nameAdd);
+		buttonBar.add(sizeBox);
+	}
+	
+	private void makeGrid()
+	{
+		p1 = new JPanel();
+		p1.setLayout(new FlowLayout());
+		p1.setBackground(Color.GRAY);
+		p1.setPreferredSize(new Dimension(MEM_BLOCK_WIDTH, 10 * MEM_BLOCK_SCALE));
+		contentPane.add(p1, BorderLayout.WEST);
+		
+		//ta = new JTextArea("THIS IS A TEST STRING");
+		//p1.add(ta);
 	}
 	
 	private void populate()
@@ -139,16 +170,23 @@ public class MemoryGUI {
 	
 	private void add()
 	{
+		String name = nameAdd.getText();
+		String size = sizeBox.getText();
+		controller.add(name, size);
+		
 		
 	}
 	
 	private void remove()
 	{
-	
+		String name = nameRemove.getText();
+		controller.remove(name);
 	}
+	
 	
 	private void reset()
 	{
+		
 		frame.dispose();
 		makeFrame();
 	}

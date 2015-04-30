@@ -13,6 +13,11 @@ public class NewCore {
 		startMemory(array);
 	}
 	
+	public NewCore()
+	{
+	
+	}
+	
 	public static ArrayList<MemoryObject> startMemory (Object [] array) throws MemoryException 
 	{
 		memory = new ArrayList<MemoryObject> (size / 2);
