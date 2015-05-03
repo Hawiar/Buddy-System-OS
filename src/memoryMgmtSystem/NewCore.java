@@ -6,16 +6,18 @@ public class NewCore {
 	private static ArrayList<MemoryObject> memory;
 	private final static int size = 64;
 	
+	public NewCore()
+	{
+		memory = new ArrayList<MemoryObject> (size / 2);
+		memory.add(new MemoryObject(0, 63));
+		//ArrayList<MemoryObject> system = new ArrayList<MemoryObject>(); 
+	}
+	
 	public NewCore (Object [] array) 
 	{
 		memory = new ArrayList<MemoryObject> (size / 2);
 		memory.add(new MemoryObject(0, 63));
 		startMemory(array);
-	}
-	
-	public NewCore()
-	{
-	
 	}
 	
 	public static ArrayList<MemoryObject> startMemory (Object [] array) throws MemoryException 
@@ -109,15 +111,39 @@ public class NewCore {
 	
 	public static void remove (MemoryObject item) 
 	{
-		for (int i = 0; i < memory.size(); i++) {
+		for (int i = 0; i < memory.size(); i++) 
+		{
 			MemoryObject current = memory.get(i);
-			if (current.getName() == item.getName()) {
+			if (current.getName() == item.getName()) 
+			{
 				MemoryObject newOne = new MemoryObject(current.getStart(), current.getEnd());
 				memory.set(i, newOne);
 				System.out.println("item removed");
 				buddyUp();
 				break;
 			}
+		}
+	}
+	
+	public static void removeOne (String name)
+	{
+		boolean exists = false;
+		for (int i = 0; i < memory.size(); i++) 
+		{
+			MemoryObject current = memory.get(i);
+			if(current.getName() == name)
+			{
+				exists = true;
+				MemoryObject newOne = new MemoryObject(current.getStart(), current.getEnd());
+				memory.set(i, newOne);
+				System.out.println("item removed");
+				buddyUp();
+				break;
+			}
+		}
+		if(exists == false)
+		{
+			System.out.println("Item doesn't exist.");
 		}
 	}
 	
@@ -146,4 +172,14 @@ public class NewCore {
 		}
 	}
 	
-}
+	public void print()
+	{
+		for(int i = 0; i <memory.size(); i++)
+		{
+			System.out.println(memory.get(i).getName());
+		}
+	}
+	
+	}
+	
+

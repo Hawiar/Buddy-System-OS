@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 
 public class MemoryGUI {
+	MemoryController controller = new MemoryController();
 	NewCore mem;
 	JFrame frame;
 	JMenuBar menubar;
@@ -37,9 +38,9 @@ public class MemoryGUI {
 	private static JPanel startBar = new JPanel(); //Holds start button
 	private static JLabel instructionsLabel; //Used for instructional display
 	private JLabel freeSpace; //Possible counter for free space left in memory, to be displayed at top of button bar
-	private static JTextField nameAdd = new JTextField();
-	private static JTextField sizeBox = new JTextField();
-	private static JTextField nameRemove = new JTextField();
+	private static JTextField nameAdd = new JTextField("Name");
+	private static JTextField sizeBox = new JTextField("Size");
+	private static JTextField nameRemove = new JTextField("Name");
 	
 	
 
@@ -55,8 +56,7 @@ public class MemoryGUI {
 	
 	public void makeFrame()
 	{
-		MemoryController controller = new MemoryController();
-		
+		//MemoryController controller = new MemoryController();
 		frame = new JFrame("Memory Management System");
 		contentPane = frame.getContentPane();
 		
@@ -114,6 +114,7 @@ public class MemoryGUI {
 		startBar.add(start);
 	}
 	
+	//Populates the frame with buttons and textFields
 	private  void addButtons()
 	{
 		JButton add = new JButton("Add");
@@ -134,6 +135,12 @@ public class MemoryGUI {
 				reset();}
         });
 		
+		JButton print = new JButton("Print");
+		print.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				print();}
+        });
+		
 		JButton quit = new JButton("Quit");
 		quit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -143,11 +150,13 @@ public class MemoryGUI {
 		//Populate buttons
 		//buttonBar.add(freeSpace);
 		buttonBar.add(add);
-		buttonBar.add(remove);
-		buttonBar.add(reset);
-		buttonBar.add(quit);
 		buttonBar.add(nameAdd);
 		buttonBar.add(sizeBox);
+		buttonBar.add(remove);
+		buttonBar.add(nameRemove);
+		buttonBar.add(print);
+		buttonBar.add(reset);
+		buttonBar.add(quit);
 	}
 	
 	private void makeGrid()
@@ -171,22 +180,49 @@ public class MemoryGUI {
 	private void add()
 	{
 		String name = nameAdd.getText();
-		String size = sizeBox.getText();
-		controller.add(name, size);
-		
-		
+		String stringSize = sizeBox.getText();
+		try
+		{
+		   int size = Integer.parseInt(stringSize);
+		   if(size > 0)
+	       {
+			  controller.add(name, size);
+			  nameAdd.setText("");
+			  sizeBox.setText("");
+	       }
+		   else
+		   {
+			  JOptionPane.showMessageDialog(frame,
+				    "Please enter a positive number in the 'Size' text field",
+				    "Number error",
+				    JOptionPane.ERROR_MESSAGE);
+			  sizeBox.setText("");
+		   }
+	    }
+		catch(NumberFormatException e)
+		{
+			JOptionPane.showMessageDialog(frame,
+				    "Please enter a number in the 'Size' text field",
+				    "Number error",
+				    JOptionPane.ERROR_MESSAGE);
+			sizeBox.setText("");
+		}		
 	}
 	
 	private void remove()
 	{
 		String name = nameRemove.getText();
 		controller.remove(name);
+		nameRemove.setText("");
 	}
 	
+	private void print()
+	{
+		controller.print();
+	}
 	
 	private void reset()
 	{
-		
 		frame.dispose();
 		makeFrame();
 	}
