@@ -73,7 +73,7 @@ public class MemoryGUI {
 		frame.pack();
 		frame.setSize(700, 700);
 		frame.setVisible(true);
-		buttonBar.setLayout(new GridLayout (5,2));
+		buttonBar.setLayout(new GridLayout (8,2));
 		p2.add(buttonBar, BorderLayout.EAST);
 		
 		if (startUsed == false) //Checks if user has already read the instructions
@@ -147,13 +147,28 @@ public class MemoryGUI {
 				quit();}
         });
 		
+		
+		
 		//Populate buttons
-		//buttonBar.add(freeSpace);
-		buttonBar.add(add);
+		JLabel blank1 = new JLabel("    ");
+		JLabel blank2 = new JLabel("    ");
+		JLabel blank3 = new JLabel("    ");
+		JLabel blank4 = new JLabel("    ");
+		JLabel name1 = new JLabel("Name");
+		JLabel name2 = new JLabel("Name");
+		JLabel size = new JLabel("Size");
+		buttonBar.add(name1);
+		buttonBar.add(size);
 		buttonBar.add(nameAdd);
 		buttonBar.add(sizeBox);
-		buttonBar.add(remove);
+		buttonBar.add(add);
+		buttonBar.add(blank1);
+		buttonBar.add(name2);
+		buttonBar.add(blank4);
 		buttonBar.add(nameRemove);
+		buttonBar.add(blank2);
+		buttonBar.add(remove);
+		buttonBar.add(blank3);
 		buttonBar.add(print);
 		buttonBar.add(reset);
 		buttonBar.add(quit);
@@ -177,10 +192,33 @@ public class MemoryGUI {
 		
 	}
 	
+	//User Add selection
 	private void add()
 	{
 		String name = nameAdd.getText();
 		String stringSize = sizeBox.getText();
+
+		    //Item name must contain at least 1 character
+			if(name.equals(""))
+			{
+			  JOptionPane.showMessageDialog(frame,
+					    "Please enter a name containing at least 1 character",
+					    "Name error",
+					    JOptionPane.ERROR_MESSAGE);
+			  nameAdd.setText("");
+			  return;
+			}
+			//Checks if the name already exists in memory, asks for a new one if it does
+			if(controller.exists(name))
+			{
+			  JOptionPane.showMessageDialog(frame,
+					    "That name already exists, please choose another.",
+					    "Name error",
+					    JOptionPane.ERROR_MESSAGE);
+			  nameAdd.setText("");
+			  return;
+			}
+		//Checks to see if user entered a positive number for the size of the memory item	
 		try
 		{
 		   int size = Integer.parseInt(stringSize);
@@ -209,10 +247,21 @@ public class MemoryGUI {
 		}		
 	}
 	
+	//User remove selection
 	private void remove()
 	{
 		String name = nameRemove.getText();
+		if(controller.exists(name))
+		{
 		controller.remove(name);
+		}
+		else
+		{
+		JOptionPane.showMessageDialog(frame,
+			    "The memory item " + nameRemove.getText() + " does not exist, try again." ,
+			    "Nonexistant Error",
+			    JOptionPane.ERROR_MESSAGE);
+		}
 		nameRemove.setText("");
 	}
 	

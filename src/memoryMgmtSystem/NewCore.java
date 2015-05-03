@@ -52,6 +52,7 @@ public class NewCore {
 						temp.getSize() == memSize) {
 					item.setStart(temp.getStart());
 					item.setEnd(temp.getEnd());
+					item.setSize(memSize);
 					memory.set(i, item);
 					System.out.println("Item inserted");
 					return;
@@ -125,26 +126,35 @@ public class NewCore {
 		}
 	}
 	
+	//Removes item from memory by name, view is currently using this remove function
 	public static void removeOne (String name)
 	{
+		if(exists(name) != -1)
+		{
+			int pos = exists(name);
+			MemoryObject current = memory.get(pos);
+			MemoryObject newOne = new MemoryObject(current.getStart(), current.getEnd());
+			memory.set(pos, newOne);
+			buddyUp();
+		}
+	}
+	
+	//Checks if item exists in memory or not
+	public static int exists(String name)
+	{
 		boolean exists = false;
-		for (int i = 0; i < memory.size(); i++) 
+		int i = 0;
+		while(!exists && i < memory.size())
 		{
 			MemoryObject current = memory.get(i);
 			if(current.getName() == name)
 			{
 				exists = true;
-				MemoryObject newOne = new MemoryObject(current.getStart(), current.getEnd());
-				memory.set(i, newOne);
-				System.out.println("item removed");
-				buddyUp();
-				break;
+				return i;
 			}
+			i++;
 		}
-		if(exists == false)
-		{
-			System.out.println("Item doesn't exist.");
-		}
+		return -1;
 	}
 	
 	public static void buddyUp () 
@@ -172,11 +182,12 @@ public class NewCore {
 		}
 	}
 	
+	//Prints each memory item in order along with its size, currently used for testing purposes
 	public void print()
 	{
 		for(int i = 0; i <memory.size(); i++)
 		{
-			System.out.println(memory.get(i).getName());
+			System.out.println(memory.get(i).getName() + " " + memory.get(i).getSize());
 		}
 	}
 	
