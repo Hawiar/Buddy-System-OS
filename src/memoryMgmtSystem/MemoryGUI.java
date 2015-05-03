@@ -7,6 +7,7 @@ import javax.swing.*;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class MemoryGUI {
@@ -141,6 +142,11 @@ public class MemoryGUI {
 				print();}
         });
 		
+		JButton random = new JButton("Random");
+		random.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				random();}
+        }); 
 		JButton quit = new JButton("Quit");
 		quit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -170,6 +176,7 @@ public class MemoryGUI {
 		buttonBar.add(remove);
 		buttonBar.add(blank3);
 		buttonBar.add(print);
+		buttonBar.add(random);
 		buttonBar.add(reset);
 		buttonBar.add(quit);
 	}
@@ -268,6 +275,11 @@ public class MemoryGUI {
 	private void print()
 	{
 		controller.print();
+	}
+	
+	private void random()
+	{
+		controller.random();
 	}
 	
 	private void reset()
