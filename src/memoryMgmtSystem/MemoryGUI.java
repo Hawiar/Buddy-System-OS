@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 
-public class MemoryGUI {
+public class MemoryGUI extends JFrame implements ActionListener {
 	MemoryController controller = new MemoryController();
 	NewCore mem;
 	JFrame frame;
@@ -18,7 +18,12 @@ public class MemoryGUI {
 	Container contentPane;
 	JPanel p1;
 	JPanel p2;
-	JTextArea ta;
+	JPanel p3;
+	JTextArea t;
+	float tempR;
+	float tempG;
+	float tempB;
+	int currentSize= 0;
 	private boolean startUsed = false; //Keep track of user's first time using start
 	
 	private int heightAdjustment = 28;
@@ -63,16 +68,15 @@ public class MemoryGUI {
 		
 		frame.setLayout(new BorderLayout());
 		p1 = new JPanel();
-		p1.setLayout(new FlowLayout());
+		//p1.setLayout(new FlowLayout());
+		p1.setLayout(new GridLayout(64, 1));
 		p2 = new JPanel();
 		contentPane.add(p1, BorderLayout.WEST);
 		contentPane.add(p2, BorderLayout.EAST);
 		
-		ta = new JTextArea();
-		p1.add(ta);
-		
 		frame.pack();
-		frame.setSize(700, 700);
+		//frame.setSize(700, 700);
+		frame.setSize(700, 800);
 		frame.setVisible(true);
 		buttonBar.setLayout(new GridLayout (8,2));
 		p2.add(buttonBar, BorderLayout.EAST);
@@ -183,19 +187,36 @@ public class MemoryGUI {
 	
 	private void makeGrid()
 	{
-		p1 = new JPanel();
-		p1.setLayout(new FlowLayout());
-		p1.setBackground(Color.GRAY);
-		p1.setPreferredSize(new Dimension(MEM_BLOCK_WIDTH, 10 * MEM_BLOCK_SCALE));
+		//p1 = new JPanel();
+		//p1.setLayout(new FlowLayout());
+		p1.setLayout(new GridLayout(64,1));
+		p1.setBackground(Color.WHITE);
+		//p1.setPreferredSize(new Dimension(MEM_BLOCK_WIDTH, 10 * MEM_BLOCK_SCALE));
+		p1.setPreferredSize(new Dimension(MEM_BLOCK_WIDTH, MEM_BLOCK_SCALE));
 		contentPane.add(p1, BorderLayout.WEST);
 		
-		//ta = new JTextArea("THIS IS A TEST STRING");
-		//p1.add(ta);
+	}
+	
+	private void blocks(String s, int n){
+		Random rnd = new Random();
+		final float r = rnd.nextFloat() % 10;
+		final float g = rnd.nextFloat() % 10;
+		final float b = rnd.nextFloat() % 10;
+		for(int i=0; i<n; i++){
+			JTextArea co = new JTextArea(s);
+			Color randomColor = new Color(r, g, b);
+			co.setBackground(randomColor);
+			System.out.println("its called");
+			p1.add(co);
+			p1.revalidate();
+			p1.repaint();
+		}
 	}
 	
 	private void populate()
 	{
 		addButtons();
+		makeGrid();
 		
 	}
 	
@@ -291,5 +312,10 @@ public class MemoryGUI {
 	private void quit() {
 		System.exit(0); 
 	}
-	
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 }
