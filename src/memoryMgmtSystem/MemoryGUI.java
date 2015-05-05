@@ -197,6 +197,17 @@ public class MemoryGUI extends JFrame implements ActionListener {
 		
 	}
 	
+	private void readMemory()
+	{
+		ArrayList<MemoryObject> memory = controller.coreMemory();
+		for(MemoryObject os : memory)
+		{
+			String name = os.getName();
+			int size = os.getSize();
+			blocks(name, size);
+		}
+	}
+	
 	private void blocks(String s, int n){
 		Random rnd = new Random();
 		final float r = rnd.nextFloat() % 10;
@@ -255,6 +266,7 @@ public class MemoryGUI extends JFrame implements ActionListener {
 			  controller.add(name, size);
 			  nameAdd.setText("");
 			  sizeBox.setText("");
+			  readMemory();
 	       }
 		   else
 		   {
@@ -291,6 +303,7 @@ public class MemoryGUI extends JFrame implements ActionListener {
 			    JOptionPane.ERROR_MESSAGE);
 		}
 		nameRemove.setText("");
+		readMemory();
 	}
 	
 	private void print()
@@ -301,6 +314,7 @@ public class MemoryGUI extends JFrame implements ActionListener {
 	private void random()
 	{
 		controller.random();
+		readMemory();
 	}
 	
 	private void reset()

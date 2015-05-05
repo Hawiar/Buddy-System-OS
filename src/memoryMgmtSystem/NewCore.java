@@ -191,6 +191,12 @@ public class NewCore {
 		}
 	}
 	
+	public ArrayList<MemoryObject> getMemory()
+	{
+		return memory;
 	}
+}
+	
+
 	
 

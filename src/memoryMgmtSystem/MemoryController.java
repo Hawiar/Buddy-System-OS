@@ -1,5 +1,6 @@
 package memoryMgmtSystem;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
@@ -39,6 +40,12 @@ public class MemoryController {
 		}
 	}
 	
+	public ArrayList<MemoryObject> coreMemory()
+	{
+		ArrayList<MemoryObject> memory = model.getMemory();
+		return memory;
+	}
+	
 	public void random()
 	{
 		Random numRand = new Random();
@@ -50,7 +57,6 @@ public class MemoryController {
 				         "bad","easy","lol","Hurt","code","hate","kill","ice","fire","icecream","man","destroy","computer","book","dictionary","technology",
 				         "power","thunder","controller","dexterity","keyboard","thunderous","blizzard","hazardous","algorithm","destruction","operation","assignment","despicable"};
 
-		
 		boolean choice = rand.nextBoolean();
 		if(choice)
 		{
@@ -66,6 +72,7 @@ public class MemoryController {
 			remove(name);
 			//System.out.println(name);
 		}
+		
 		
 	}
 
